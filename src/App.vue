@@ -1,10 +1,9 @@
 <template>
-  <!--The most basic form of data binding is text interpolation using the "Mustache" syntax (double curly braces)-->
+  
   <h1>message: {{ message }}</h1>
 
   <hr />
 
-  <!--{{message}} refers to the message we defined in data-->
   <h1>number: {{ number }}</h1>
 
   <h1>doubleNum(50): {{ doubleNum(50) }}</h1>
@@ -47,7 +46,7 @@ let harry = {
   id: 1001,
   name: 'Harry Potter',
   house: 'Gryffindor',
-  age: 17, // Age during the final battle of Hogwarts
+  age: 17, 
   wand: {
     core: 'Phoenix feather',
     wood: 'Holly'
