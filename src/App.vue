@@ -15,7 +15,6 @@
     <button @click="changeWandCore">Change wand core</button>
     <button @click="changeWizard">Change wizard</button>
 
-    <!-- You can also mutate a ref directly in event handlers -->
     <button @click="wizard.wand.core = 'Unicorn hair'">Change wand core</button>
   </div>
 
@@ -44,7 +43,7 @@ let wizard = ref({
   id: 1001,
   name: 'Harry Potter',
   house: 'Gryffindor',
-  age: 17, // Age during the final battle of Hogwarts
+  age: 17,
   wand: {
     core: 'Phoenix feather',
     wood: 'Holly'
