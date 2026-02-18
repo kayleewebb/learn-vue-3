@@ -1,101 +1,92 @@
 <template>
-  
-  <h1>message: {{ message }}</h1>
+  <h1>{{ message }}</h1>
+
+  <button v-on:click="replaceText('v-on is fun!')">Replace text</button>
+
+  <button @click="replaceText('v-on is fun!')">Replace text</button>
 
   <hr />
 
-  <h1>number: {{ number }}</h1>
+  <p>An input field where the user can ONLY enter numbers:</p>
+  <input type="text" @keydown="handleInput($event)" />
 
-  <h1>doubleNum(50): {{ doubleNum(50) }}</h1>
-
-  <h1>number * 2 = {{ number * 2 }}</h1>
-
-  <h1>
-    {{ number > 150 ? 'number is great than 150' : 'number is less than 150' }}
-  </h1>
-
-  <h1 v-text="number"></h1>
+  <hr />
+  <p>A demo of preventing the default behavior of an event.</p>
+  <p>Right click in the cyan box below will not show the context menu:</p>
+  <div
+    style="width: 100px; height: 100px; background-color: aqua"
+    @contextmenu.prevent="console.log('Show a custom context menu instead.')"
+  ></div>
 
   <hr />
 
-  <h1>harry: {{ harry }}</h1>
+  <p>A demo of stopping event propagation:</p>
 
-  <h1>harry.name: {{ harry.name }}</h1>
-
-  <h1>hogwartsWizards: {{ hogwartsWizards }}</h1>
-
-  <h1>hogwartsWizards[0]: {{ hogwartsWizards[0] }}</h1>
+  <div id="mouseover" @mouseover="fun1">
+    <textarea @mouseover.stop="fun2($event)">This is a text area.</textarea>
+  </div>
   <hr />
-
-  <h1>rawHtml: {{ rawHtml }}</h1>
-
-  <h1 v-text="rawHtml"></h1>
-
-  <h1 v-html="rawHtml"></h1>
+  <div>
+    Press down the "Enter" key will trigger a console log print:
+    <input
+      type="text"
+      @keydown.enter="console.log('You pressed the Enter key.')"
+    />
+  </div>
+  <div>
+    Press down the "Arrow Down" key will trigger a console log print:
+    <input
+      type="text"
+      @keydown.down="console.log('You pressed the Arrow Down key.')"
+    />
+  </div>
+  <div>
+    Press down the "Space" key will trigger a console log print:
+    <input
+      type="text"
+      @keydown.space="console.log('You pressed the Space key.')"
+    />
+  </div>
+  <div>
+    Press down the "b" key will trigger a console log print:
+    <input type="text" @keydown.b="console.log('You pressed the B key.')" />
+  </div>
+  <div>
+    Press down the "Ctrl c" will trigger a console log print:
+    <input type="text" @keydown.ctrl.c="console.log('You pressed Ctrl c.')" />
+  </div>
 </template>
 
 <script setup>
-let message = 'Hello, Vue!'
-let number = 50
+import { ref } from 'vue'
 
-function doubleNum(num) {
-  return num * 2
+let message = ref('Hello, v-on!')
+
+function replaceText(msg) {
+  message.value = msg
 }
 
-let harry = {
-  id: 1001,
-  name: 'Harry Potter',
-  house: 'Gryffindor',
-  age: 17, 
-  wand: {
-    core: 'Phoenix feather',
-    wood: 'Holly'
+function handleInput(event) {
+  let keyCode = event.keyCode
+  if (keyCode < 48 || keyCode > 57) {
+    event.preventDefault()
   }
 }
-const hogwartsWizards = [
-  {
-    id: 1001,
-    name: 'Harry Potter',
-    house: 'Gryffindor',
-    age: 17,
-    wand: {
-      core: 'Phoenix feather',
-      wood: 'Holly'
-    }
-  },
-  {
-    id: 1002,
-    name: 'Hermione Granger',
-    house: 'Gryffindor',
-    age: 17,
-    wand: {
-      core: 'Dragon heartstring',
-      wood: 'Vine'
-    }
-  },
-  {
-    id: 1003,
-    name: 'Ron Weasley',
-    house: 'Gryffindor',
-    age: 17,
-    wand: {
-      core: 'Unicorn hair',
-      wood: 'Willow'
-    }
-  },
-  {
-    id: 1004,
-    name: 'Draco Malfoy',
-    house: 'Slytherin',
-    age: 17,
-    wand: {
-      core: 'Dragon heartstring',
-      wood: 'Hawthorn'
-    }
-  }
-]
 
-let rawHtml = '<span style="color: red">This should be red.</span>'
+function fun1() {
+  console.log('mouse over div')
+}
+
+function fun2(event) {
+  console.log('mouse over textarea')
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+#mouseover {
+  text-align: right;
+  background-color: purple;
+  width: 300px;
+  height: 300px;
+}
+</style>
